@@ -1,14 +1,35 @@
-
 import React, { useState } from 'react';
-import { MessageSquare, Send, Paperclip, Search, UserCheck } from 'lucide-react';
+import { MessageSquare, Send, Paperclip, Search, UserCheck, Plus, X } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 
 export const SecureMessagesSection = () => {
   const [selectedChat, setSelectedChat] = useState('1');
   const [newMessage, setNewMessage] = useState('');
+  const [isNewMessageOpen, setIsNewMessageOpen] = useState(false);
+  const [newMessageRecipient, setNewMessageRecipient] = useState('');
+  const [newMessageSubject, setNewMessageSubject] = useState('');
+  const [newMessageContent, setNewMessageContent] = useState('');
+
+  const handleSendNewMessage = () => {
+    console.log('Sending new message:', {
+      recipient: newMessageRecipient,
+      subject: newMessageSubject,
+      content: newMessageContent
+    });
+    
+    // Reset form and close modal
+    setNewMessageRecipient('');
+    setNewMessageSubject('');
+    setNewMessageContent('');
+    setIsNewMessageOpen(false);
+    
+    // Here you would typically send the message to your backend
+    alert('Message sent successfully!');
+  };
 
   const conversations = [
     {
@@ -71,10 +92,67 @@ export const SecureMessagesSection = () => {
           <h1 className="text-3xl font-bold text-gray-900">Secure Messages</h1>
           <p className="text-gray-600 mt-2">Communicate securely with your trusted contacts</p>
         </div>
-        <Button>
-          <MessageSquare className="h-4 w-4 mr-2" />
-          New Message
-        </Button>
+        <Dialog open={isNewMessageOpen} onOpenChange={setIsNewMessageOpen}>
+          <DialogTrigger asChild>
+            <Button>
+              <MessageSquare className="h-4 w-4 mr-2" />
+              New Message
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>New Secure Message</DialogTitle>
+            </DialogHeader>
+            <div className="space-y-4">
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Recipient
+                </label>
+                <Input
+                  placeholder="Select recipient..."
+                  value={newMessageRecipient}
+                  onChange={(e) => setNewMessageRecipient(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Subject
+                </label>
+                <Input
+                  placeholder="Enter subject..."
+                  value={newMessageSubject}
+                  onChange={(e) => setNewMessageSubject(e.target.value)}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-gray-700 mb-2 block">
+                  Message
+                </label>
+                <Textarea
+                  placeholder="Type your secure message..."
+                  value={newMessageContent}
+                  onChange={(e) => setNewMessageContent(e.target.value)}
+                  rows={4}
+                />
+              </div>
+              <div className="flex justify-end space-x-2">
+                <Button
+                  variant="outline"
+                  onClick={() => setIsNewMessageOpen(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleSendNewMessage}
+                  disabled={!newMessageRecipient || !newMessageContent}
+                >
+                  <Send className="h-4 w-4 mr-2" />
+                  Send Message
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-[600px]">
