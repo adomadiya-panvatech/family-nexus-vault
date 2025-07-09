@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { FileText, Upload, Filter, Grid, List, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -18,7 +17,7 @@ export const DocumentGrid = () => {
       uploadDate: '2024-01-15',
       size: '2.4 MB',
       aiTags: ['Estate Planning', 'Legal', 'Important'],
-      securityLevel: 'High'
+      securityLevel: 'High' as const
     },
     {
       id: '2',
@@ -27,7 +26,7 @@ export const DocumentGrid = () => {
       uploadDate: '2024-01-14',
       size: '1.8 MB',
       aiTags: ['Medical', 'Health Records', 'HIPAA'],
-      securityLevel: 'High'
+      securityLevel: 'High' as const
     },
     {
       id: '3',
@@ -36,7 +35,7 @@ export const DocumentGrid = () => {
       uploadDate: '2024-01-12',
       size: '856 KB',
       aiTags: ['Financial', 'Investments', 'Quarterly'],
-      securityLevel: 'Medium'
+      securityLevel: 'Medium' as const
     },
     {
       id: '4',
@@ -45,7 +44,7 @@ export const DocumentGrid = () => {
       uploadDate: '2024-01-10',
       size: '45.2 MB',
       aiTags: ['Family', 'Photos', 'Personal'],
-      securityLevel: 'Low'
+      securityLevel: 'Low' as const
     }
   ];
 
